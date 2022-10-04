@@ -1,6 +1,9 @@
 {
   "name": "bliss-next-redux",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.x"
+  },
   "description": "Next web solution for Blisstronics",
   "main": "backend/server.js",
   "scripts": {
