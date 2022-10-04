@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import MetaData from '../layout/MetaData';
@@ -11,7 +11,6 @@ import './Payment.scss';
 
 const Payment = () => {
   const navigate = useNavigate();
-  const alert = useAlert();
   const dispatch = useDispatch();
 
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
@@ -27,10 +26,10 @@ const Payment = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
-  }, [error, alert, dispatch]);
+  }, [error, dispatch]);
 
   const changeHandler = (e) => {
     setPaymentMethod(e.target.value);

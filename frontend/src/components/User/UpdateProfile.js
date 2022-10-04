@@ -9,14 +9,13 @@ import {
   clearErrors,
   loadUser,
 } from '../../actions/userActions';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import Loader from '../layout/Loader/Loader';
 import MetaData from '../layout/MetaData';
 import { UPDATE_PROFILE_RESET } from '../../constants/userConstant';
 
 const UpdateProfile = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const { loading, isUpdated, error } = useSelector((state) => state.profile);
@@ -61,17 +60,17 @@ const UpdateProfile = () => {
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors);
     }
 
     if (isUpdated) {
-      alert.success('Profile updated successfully');
+      toast.success('Profile updated successfully');
       dispatch(loadUser());
       navigate('/account');
       dispatch({ type: UPDATE_PROFILE_RESET });
     }
-  }, [dispatch, alert, error, user, isUpdated, navigate]);
+  }, [dispatch, error, user, isUpdated, navigate]);
 
   return (
     <>

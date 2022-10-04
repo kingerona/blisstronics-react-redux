@@ -5,23 +5,22 @@ import ProductCard from './ProductCard.js';
 import { clearErrors, getProducts } from '../../actions/productActions';
 import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../layout/Loader/Loader';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import GoToTop from '../GoToTop';
 import MetaData from '../layout/MetaData';
 
 const Home = () => {
-  const alert = useAlert();
   const dispatch = useDispatch();
   const { loading, error, products } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     dispatch(getProducts());
-  }, [dispatch, alert, error]);
+  }, [dispatch, error]);
 
   return (
     <>

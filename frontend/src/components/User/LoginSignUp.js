@@ -7,13 +7,12 @@ import Face from '@mui/icons-material/Face';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { login, register, clearErrors } from '../../actions/userActions';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import Loader from '../layout/Loader/Loader';
 import MetaData from '../layout/MetaData';
 
 const LoginSignUp = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const { loading, isAuthenticated, error } = useSelector(
     (state) => state.user
   );
@@ -80,14 +79,14 @@ const LoginSignUp = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors);
     }
 
     if (isAuthenticated) {
       navigate(redirectRoute);
     }
-  }, [dispatch, alert, error, isAuthenticated, navigate, redirectRoute]);
+  }, [dispatch, error, isAuthenticated, navigate, redirectRoute]);
 
   const switchTabs = (e, tab) => {
     if (tab === 'login') {

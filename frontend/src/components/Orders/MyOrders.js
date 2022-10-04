@@ -4,7 +4,7 @@ import { DataGrid } from '@mui/x-data-grid/DataGrid/DataGrid';
 import LaunchIcon from '@mui/icons-material/Launch';
 import './MyOrders.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import { myOrders, clearErrors } from '../../actions/orderActions';
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/Loader/Loader';
@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography';
 
 const MyOrders = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const { loading, orders, error } = useSelector((state) => state.myOrders);
   const { user } = useSelector((state) => state.user);
@@ -74,12 +73,12 @@ const MyOrders = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error.message);
+      toast.error(error.message);
       dispatch(clearErrors());
     }
 
     dispatch(myOrders());
-  }, [dispatch, alert, error]);
+  }, [dispatch, error]);
 
   return (
     <>

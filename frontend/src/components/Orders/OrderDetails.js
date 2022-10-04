@@ -6,24 +6,23 @@ import { Link, useParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { getOrderDetails, clearErrors } from '../../actions/orderActions';
 import Loader from '../layout/Loader/Loader';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import GoToTop from '../GoToTop';
 
 const OrderDetails = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const { orderId } = useParams();
 
   const { loading, order, error } = useSelector((state) => state.orderDetails);
 
   useEffect(() => {
     if (error) {
-      alert.error(error.message);
+      toast.error(error.message);
       dispatch(clearErrors);
     }
 
     dispatch(getOrderDetails(orderId));
-  }, [alert, dispatch, error, orderId]);
+  }, [dispatch, error, orderId]);
 
   return (
     <>

@@ -12,7 +12,7 @@ import RatingIcon from 'react-rating';
 import { AiFillStar } from 'react-icons/ai';
 import Loader from '../layout/Loader/Loader';
 import GoToTop from '../GoToTop';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import { addItemsToCart } from '../../actions/cartActions';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -38,7 +38,6 @@ import { NEW_REVIEW_RESET } from '../../constants/productConstants';
 const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
@@ -66,21 +65,21 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     if (reviewError) {
-      alert.error(reviewError);
+      toast.error(reviewError);
       dispatch(clearErrors());
     }
 
     if (success) {
-      alert.success('Review submitted successfully');
+      toast.success('Review submitted successfully');
       dispatch({ type: NEW_REVIEW_RESET });
     }
 
     dispatch(getProductDetails(id));
-  }, [dispatch, id, alert, error, reviewError, success]);
+  }, [dispatch, id, error, reviewError, success]);
 
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
@@ -114,7 +113,7 @@ const ProductDetails = () => {
 
   const addToCartHandler = () => {
     dispatch(addItemsToCart(id, quantity));
-    alert.success('Item added to cart');
+    toast.success('Item added to cart');
   };
 
   return (

@@ -9,7 +9,7 @@ import Pagination from 'react-js-pagination';
 import GoToTop from '../GoToTop';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import MetaData from '../layout/MetaData';
 
 const categories = [
@@ -23,7 +23,6 @@ const categories = [
 
 const Products = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([0, 50000]);
@@ -52,12 +51,12 @@ const Products = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     dispatch(getProducts(keyword, currentPage, price, category, ratings));
-  }, [dispatch, keyword, currentPage, price, category, ratings, alert, error]);
+  }, [dispatch, keyword, currentPage, price, category, ratings, error]);
 
   let count = filteredProductsCount;
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './NewProduct.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { createProduct, clearErrors } from '../../actions/productActions';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import Button from '@mui/material/Button';
 import MetaData from '../layout/MetaData';
 import AccountTree from '@mui/icons-material/AccountTree';
@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 
 const NewProduct = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const navigate = useNavigate();
 
   const { loading, product, success, error } = useSelector(
@@ -42,16 +41,16 @@ const NewProduct = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (success) {
-      alert.success('Product created successfully');
+      toast.success('Product created successfully');
       dispatch({ type: NEW_PRODUCT_RESET });
       navigate(`/admin/product/${product._id}`);
     }
-  }, [alert, dispatch, error, navigate, product._id, success]);
+  }, [dispatch, error, navigate, product._id, success]);
 
   const createProductSubmitHandler = (e) => {
     e.preventDefault();

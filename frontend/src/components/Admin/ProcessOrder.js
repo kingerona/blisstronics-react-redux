@@ -2,7 +2,7 @@ import AccountTree from '@mui/icons-material/AccountTree';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
-import { useAlert } from 'react-alert';
+import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import {
@@ -18,7 +18,6 @@ import './ProcessOrder.css';
 
 const ProcessOrder = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const { orderId } = useParams();
 
   const { loading, order, error } = useSelector((state) => state.orderDetails);
@@ -38,22 +37,22 @@ const ProcessOrder = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (updateError) {
-      alert.error(updateError);
+      toast.error(updateError);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      alert.success('Order updated successfully');
+      toast.success('Order updated successfully');
       dispatch({ type: UPDATE_ORDERS_RESET });
     }
 
     dispatch(getOrderDetails(orderId));
-  }, [alert, dispatch, error, isUpdated, orderId, updateError]);
+  }, [dispatch, error, isUpdated, orderId, updateError]);
 
   return (
     <>
