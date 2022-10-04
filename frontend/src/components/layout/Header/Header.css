@@ -1,0 +1,19 @@
+.speedDial {
+  position: fixed;
+  top: 3vmax;
+  right: 3vmax;
+}
+
+.speedDial > button {
+  background-color: transparent;
+}
+
+.speedDial > button:hover {
+  background-color: rgba(255, 99, 71, 0.53);
+}
+
+.speedDialIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 100%;
+}
