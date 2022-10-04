@@ -6,8 +6,16 @@ const storeId = process.env.SSLCOMMERZ_STORE_ID;
 const storeSecret = process.env.SSLCOMMERZ_STORE_SECRET;
 const isLive = false;
 
-const frontendUrl = process.env.FRONTEND_URL;
-const backendUrl = process.env.BACKEND_URL;
+let frontendUrl = '';
+let backendUrl = '';
+
+if (process.env.NODE_ENV !== 'PRODUCTION') {
+  frontendUrl = process.env.FRONTEND_URL;
+  backendUrl = process.env.BACKEND_URL;
+} else {
+  frontendUrl = `${req.protocol}://${req.get('host')}`;
+  backendUrl = `${req.protocol}://${req.get('host')}`;
+}
 
 exports.processPayment = catchAsyncErrors(async (req, res, next) => {
   const {
