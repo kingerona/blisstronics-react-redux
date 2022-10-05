@@ -38,6 +38,9 @@ import ProductReviews from './components/Admin/ProductReviews';
 import Contact from './components/layout/Contact/Contact';
 import About from './components/layout/About/About.js';
 import NotFound from './components/layout/Not Found/NotFound';
+import CategoryList from './components/Admin/CategoryList';
+import NewCategory from './components/Admin/NewCategory';
+import UpdateCategory from './components/Admin/UpdateCategory';
 // import TopMenu from './components/layout/TopMenu/TopMenu';
 
 function App() {
@@ -53,7 +56,7 @@ function App() {
     store.dispatch(loadUser());
   }, []);
 
-  window.addEventListener('contextmenu', (e) => e.preventDefault());
+  // window.addEventListener('contextmenu', (e) => e.preventDefault());
 
   return (
     <Router>
@@ -155,6 +158,27 @@ function App() {
           element={<ProtectedRoute isAdmin={true} />}
         >
           <Route path="/admin/reviews" element={<ProductReviews />} />
+        </Route>
+        <Route
+          path="/admin/categories"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route path="/admin/categories" element={<CategoryList />} />
+        </Route>
+        <Route
+          path="/admin/category/new"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route path="/admin/category/new" element={<NewCategory />} />
+        </Route>
+        <Route
+          path="/admin/category/:categoryId"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route
+            path="/admin/category/:categoryId"
+            element={<UpdateCategory />}
+          />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

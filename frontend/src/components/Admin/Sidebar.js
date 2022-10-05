@@ -12,6 +12,7 @@ import Dashboard from '@mui/icons-material/Dashboard';
 import People from '@mui/icons-material/People';
 import RateReview from '@mui/icons-material/RateReview';
 import Computer from '@mui/icons-material/Computer';
+import Category from '@mui/icons-material/Category';
 
 const Sidebar = () => {
   return (
@@ -24,6 +25,7 @@ const Sidebar = () => {
           <Dashboard /> Dashboard
         </p>
       </Link>
+
       <TreeView
         defaultCollapseIcon={<ExpandMore />}
         defaultExpandIcon={<Computer />}
@@ -37,6 +39,21 @@ const Sidebar = () => {
           </Link>
         </TreeItem>
       </TreeView>
+
+      <TreeView
+        defaultCollapseIcon={<ExpandMore />}
+        defaultExpandIcon={<Category />}
+      >
+        <TreeItem nodeId="1" label="Categories">
+          <Link to="/admin/categories">
+            <TreeItem nodeId="2" label="All" icon={<PostAdd />} />
+          </Link>
+          <Link to="/admin/category/new">
+            <TreeItem nodeId="3" label="Create" icon={<Add />} />
+          </Link>
+        </TreeItem>
+      </TreeView>
+
       <Link to="/admin/orders">
         <p>
           <ListAlt /> Orders

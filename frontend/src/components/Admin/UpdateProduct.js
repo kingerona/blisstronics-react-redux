@@ -27,6 +27,9 @@ const UpdateProduct = () => {
     isUpdated,
     error: updateError,
   } = useSelector((state) => state.product);
+  const { categories, error: categoriesError } = useSelector(
+    (state) => state.categories
+  );
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -36,15 +39,6 @@ const UpdateProduct = () => {
   const [images, setImages] = useState([]);
   const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
-
-  const categories = [
-    'Desktop',
-    'Laptop',
-    'Mouse',
-    'Keyboard',
-    'RAM',
-    'Graphics Card',
-  ];
 
   const { productId } = useParams();
 
@@ -70,12 +64,26 @@ const UpdateProduct = () => {
       dispatch(clearErrors());
     }
 
+    if (categoriesError) {
+      toast.error(categoriesError);
+      dispatch(clearErrors());
+    }
+
     if (isUpdated) {
       toast.success('Product updated successfully');
       navigate(`/admin/product/${productId}`);
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
-  }, [dispatch, error, navigate, isUpdated, product, productId, updateError]);
+  }, [
+    dispatch,
+    error,
+    navigate,
+    isUpdated,
+    product,
+    productId,
+    updateError,
+    categoriesError,
+  ]);
 
   const updateProductSubmitHandler = (e) => {
     e.preventDefault();
@@ -167,8 +175,8 @@ const UpdateProduct = () => {
               >
                 <option value="">Choose Category</option>
                 {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
+                  <option key={cat._id} value={cat.name}>
+                    {cat.name}
                   </option>
                 ))}
               </select>

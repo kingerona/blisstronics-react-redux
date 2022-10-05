@@ -11,15 +11,16 @@ import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 import toast from 'react-hot-toast';
 import MetaData from '../layout/MetaData';
+import { getCategories } from '../../actions/categoryActions';
 
-const categories = [
-  'Desktop',
-  'Laptop',
-  'Mouse',
-  'Keyboard',
-  'RAM',
-  'Graphics Card',
-];
+// const categories = [
+//   'Desktop',
+//   'Laptop',
+//   'Mouse',
+//   'Keyboard',
+//   'RAM',
+//   'Graphics Card',
+// ];
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,12 @@ const Products = () => {
   const [price, setPrice] = useState([0, 50000]);
   const [category, setCategory] = useState('');
   const [ratings, setRatings] = useState(0);
+
+  const {
+    loading: catLoading,
+    categories,
+    error: categoriesError,
+  } = useSelector((state) => state.categories);
 
   const {
     products,
@@ -55,14 +62,30 @@ const Products = () => {
       dispatch(clearErrors());
     }
 
+    if (categoriesError) {
+      toast.error(categoriesError);
+      dispatch(clearErrors());
+    }
+
+    dispatch(getCategories());
+
     dispatch(getProducts(keyword, currentPage, price, category, ratings));
-  }, [dispatch, keyword, currentPage, price, category, ratings, error]);
+  }, [
+    dispatch,
+    keyword,
+    currentPage,
+    price,
+    category,
+    ratings,
+    error,
+    categoriesError,
+  ]);
 
   let count = filteredProductsCount;
 
   return (
     <>
-      {loading ? (
+      {loading || catLoading ? (
         <Loader />
       ) : (
         <>
@@ -93,11 +116,11 @@ const Products = () => {
             <ul className="categoryBox">
               {categories.map((category) => (
                 <li
-                  key={category}
+                  key={category._id}
                   className="category-link"
-                  onClick={() => setCategory(category)}
+                  onClick={() => setCategory(category.name)}
                 >
-                  {category}
+                  {category.name}
                 </li>
               ))}
             </ul>
